@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import logger from './config/logger.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
+import authRoutes from './routes/auth.js';
 
 dotenv.config();
 
@@ -37,11 +38,12 @@ app.get('/api/v1/health', (req, res) => {
   });
 });
 
-// API Routes (to be added in T016)
-app.use('/api/v1', (req, res, next) => {
-  // Route handler placeholder - routes will be mounted here
-  next();
-});
+// API Routes
+app.use('/api/v1/auth', authRoutes);
+// Additional routes to be added (AGMs, Invitations, Attendance)
+// app.use('/api/v1/agms', agmRoutes);
+// app.use('/api/v1/invitations', invitationRoutes);
+// app.use('/api/v1/attendance', attendanceRoutes);
 
 // 404 Handler (must be before errorHandler)
 app.use(notFoundHandler);
