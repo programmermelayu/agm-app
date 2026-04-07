@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Badge, Card } from '../components/common';
 import AGMForm, { AGMFormData } from '../components/AGMForm';
 import InvitationsTab from '../components/InvitationsTab';
+import AttendanceTab from '../components/AttendanceTab';
 import { useAGM, AGM } from '../hooks/useAGM';
 
 export const AGMDetailPage: React.FC = () => {
@@ -200,13 +201,7 @@ export const AGMDetailPage: React.FC = () => {
           )}
 
           {activeTab === 'attendance' && (
-            <Card>
-              <div className="text-center py-8">
-                <p className="text-gray-600">
-                  Attendance tracking coming soon
-                </p>
-              </div>
-            </Card>
+            <AttendanceTab agmId={agm_id!} />
           )}
         </div>
       </div>
