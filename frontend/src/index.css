@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply box-border;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900;
+}
+
+/* Remove default button styles */
+button {
+  @apply appearance-none;
+}
+
+/* Remove default input styles */
+input,
+textarea,
+select {
+  @apply appearance-none;
+}
+
+/* Accessibility: focus visible styles */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-blue-500;
+}
+
+/* Smooth transitions for all interactive elements */
+a,
+button {
+  @apply transition-colors duration-200;
+}
