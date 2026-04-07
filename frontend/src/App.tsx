@@ -4,15 +4,10 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import DashboardPage from './pages/DashboardPage';
+import CreateAGMPage from './pages/CreateAGMPage';
+import AGMDetailPage from './pages/AGMDetailPage';
 import './index.css';
-
-// Placeholder for Dashboard (to be implemented in Phase 4)
-const DashboardPage = () => (
-  <div className="min-h-screen bg-gray-50 p-8">
-    <h1 className="text-4xl font-bold text-gray-900">Dashboard</h1>
-    <p className="text-gray-600 mt-4">Coming soon - AGM management features</p>
-  </div>
-);
 
 const NotFoundPage = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -77,6 +72,30 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/agms/create"
+        element={
+          <ProtectedRoute>
+            <CreateAGMPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/agms/:agm_id"
+        element={
+          <ProtectedRoute>
+            <AGMDetailPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/agms/:agm_id/edit"
+        element={
+          <ProtectedRoute>
+            <AGMDetailPage />
           </ProtectedRoute>
         }
       />

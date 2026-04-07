@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import logger from './config/logger.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import authRoutes from './routes/auth.js';
+import agmRoutes from './routes/agms.js';
 
 dotenv.config();
 
@@ -40,8 +41,8 @@ app.get('/api/v1/health', (req, res) => {
 
 // API Routes
 app.use('/api/v1/auth', authRoutes);
-// Additional routes to be added (AGMs, Invitations, Attendance)
-// app.use('/api/v1/agms', agmRoutes);
+app.use('/api/v1/agms', agmRoutes);
+// Additional routes to be added (Invitations, Attendance)
 // app.use('/api/v1/invitations', invitationRoutes);
 // app.use('/api/v1/attendance', attendanceRoutes);
 
