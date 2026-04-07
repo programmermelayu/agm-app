@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import CreateAGMPage from './pages/CreateAGMPage';
 import AGMDetailPage from './pages/AGMDetailPage';
+import RSVPPage from './pages/RSVPPage';
 import './index.css';
 
 const NotFoundPage = () => (
@@ -65,6 +66,7 @@ function AppRoutes() {
           </PublicRoute>
         }
       />
+      <Route path="/rsvp/:token" element={<RSVPPage />} />
 
       {/* Protected routes */}
       <Route

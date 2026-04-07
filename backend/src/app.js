@@ -5,6 +5,7 @@ import logger from './config/logger.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import authRoutes from './routes/auth.js';
 import agmRoutes from './routes/agms.js';
+import invitationRoutes, { createPublicRSVPRouter } from './routes/invitations.js';
 
 dotenv.config();
 
@@ -42,8 +43,9 @@ app.get('/api/v1/health', (req, res) => {
 // API Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/agms', agmRoutes);
-// Additional routes to be added (Invitations, Attendance)
-// app.use('/api/v1/invitations', invitationRoutes);
+app.use('/api/v1/agms', invitationRoutes);
+app.use('/api/v1/rsvp', createPublicRSVPRouter());
+// Additional routes to be added (Attendance)
 // app.use('/api/v1/attendance', attendanceRoutes);
 
 // 404 Handler (must be before errorHandler)

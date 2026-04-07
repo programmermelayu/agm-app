@@ -1,6 +1,9 @@
 import dotenv from 'dotenv';
 import app from './app.js';
 import { testConnection } from './config/database.js';
+import { initializeTransporter, verifyTransporter } from './services/EmailService.js';
+import { processEmailQueue } from './config/queue.js';
+import { sendInvitationEmail, sendRSVPConfirmationEmail } from './services/EmailService.js';
 import logger from './config/logger.js';
 
 dotenv.config();
@@ -8,10 +11,47 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 /**
+ * Email processor for Bull queue
+ */
+const emailProcessor = async (jobData) => {
+  const { to, template, data } = jobData;
+
+  if (template === 'invitation') {
+    return await sendInvitationEmail({
+      to,
+      agmName: data.agmName,
+      agmDate: data.agmDate,
+      agmTime: data.agmTime,
+      rsvpToken: data.rsvpToken,
+    });
+  }
+
+  if (template === 'rsvp-confirmation') {
+    return await sendRSVPConfirmationEmail({
+      to,
+      agmName: data.agmName,
+      rsvpStatus: data.rsvpStatus,
+    });
+  }
+
+  throw new Error(`Unknown email template: ${template}`);
+};
+
+/**
  * Start server
  */
 const startServer = async () => {
   try {
+    // Initialize email transporter
+    initializeTransporter();
+    const isEmailVerified = await verifyTransporter();
+    if (!isEmailVerified) {
+      logger.warn('Email transporter verification failed - emails may not send');
+    }
+
+    // Setup email queue processor
+    processEmailQueue(emailProcessor);
+
     // Test database connection
     const isConnected = await testConnection();
     if (!isConnected) {
