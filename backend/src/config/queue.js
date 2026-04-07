@@ -1,12 +1,20 @@
 import Queue from 'bull';
 import logger from './logger.js';
 
-// Email queue for background job processing
-const emailQueue = new Queue('email', {
-  redis: {
+// Get Redis connection config - support Railway's REDIS_URL or individual env vars
+const getRedisConfig = () => {
+  if (process.env.REDIS_URL) {
+    return process.env.REDIS_URL;
+  }
+  return {
     host: process.env.REDIS_HOST || 'localhost',
     port: process.env.REDIS_PORT || 6379,
-  },
+  };
+};
+
+// Email queue for background job processing
+const emailQueue = new Queue('email', {
+  redis: getRedisConfig(),
 });
 
 // Queue event handlers
